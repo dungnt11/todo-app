@@ -16,6 +16,7 @@ class App extends Component {
     this.ramdomID = this.ramdomID.bind(this);
     this.setValue = this.setValue.bind(this);
     this.changeStatus = this.changeStatus.bind(this);
+    this.newPerson = this.newPerson.bind(this);
   }
   ramdomID() {
     let rd = ((1 + Math.random()) * 0x10000).toString(16).substring(1);
@@ -43,12 +44,26 @@ class App extends Component {
   changeStatus() {
     this.setState({
       isShow: false
-    })
+    });
   }
-
+  newPerson(value) {
+    let obj = {
+      id: this.ramdomID(),
+      ...value
+    };
+    let temp = this.state.work.concat(obj);
+    this.setState({
+      work: temp
+    });
+    localStorage.setItem("info", JSON.stringify(temp));
+  }
   render() {
     const { isShow } = this.state;
-    let status = isShow ? <Add status={this.changeStatus} /> : "";
+    let status = isShow ? (
+      <Add newPerson={this.newPerson} status={this.changeStatus} />
+    ) : (
+      ""
+    );
     return (
       <div className="container">
         <div className="text-center">

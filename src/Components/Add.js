@@ -6,20 +6,20 @@ export default class extends Component {
     this.submitWork = this.submitWork.bind(this);
     this.changeState = this.changeState.bind(this);
     this.state = {
-      nameWork: "",
-      statusWork: true
+      name: "",
+      status: true
     };
   }
 
   submitWork(event) {
     event.preventDefault();
-    console.log(this.state)
+    const { newPerson } = this.props;
+    newPerson(this.state)
   }
   changeState(event) {
     let target = event.target;
     let name = target.name;
-    let value = name === 'statusWork' ? JSON.parse(target.value) : target.value;
-    console.log(typeof value)
+    let value = name === 'status' ? JSON.parse(target.value) : target.value;
     this.setState({
       [name]: value
     });
@@ -42,18 +42,18 @@ export default class extends Component {
             <div className="form-group">
               <label>Tên :</label>
               <input
-                value={this.state.nameWork}
+                value={this.state.name}
                 onChange={this.changeState}
                 type="text"
-                name="nameWork"
+                name="name"
                 className="form-control"
               />
             </div>
             <label>Trạng Thái :</label>
             <select
-              value={this.state.statusWork}
+              value={this.state.status}
               onChange={this.changeState}
-              name="statusWork"
+              name="status"
               className="form-control"
               required="required"
             >
