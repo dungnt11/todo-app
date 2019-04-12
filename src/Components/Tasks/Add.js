@@ -36,19 +36,23 @@ export default class extends Component {
   render() {
     return (
       <TaskContext.Consumer>
-        {({ status, addWork }) => {
+        {({ status, addWork, dataEdit }) => {
           if (status) {
             return (
               <div className="panel panel-warning">
                 <div className="panel-heading">
-                  <h3 className="panel-title">Thêm Công Việc</h3>
+                  <h3 className="panel-title">
+                    {typeof dataEdit !== "string"
+                      ? "Sửa công việc"
+                      : "Thêm Công Việc"}
+                  </h3>
                 </div>
                 <div className="panel-body">
                   <div className="form-group">
                     <label>Tên :</label>
                     <input
                       onChange={this.changeWork}
-                      value={this.state.name}
+                      value={dataEdit ? dataEdit.name : this.state.name}
                       type="text"
                       name="name"
                       className="form-control"
@@ -57,7 +61,7 @@ export default class extends Component {
                   <label>Trạng Thái :</label>
                   <select
                     onChange={this.changeWork}
-                    value={this.state.status}
+                    value={dataEdit ? dataEdit.status : this.state.status}
                     className="form-control"
                     name="status"
                     required="required"
@@ -71,7 +75,7 @@ export default class extends Component {
                       onClick={() => this.submitAdd(addWork)}
                       className="btn btn-warning"
                     >
-                      Thêm
+                      {typeof dataEdit !== "string" ? "Lưu" : "Thêm"}
                     </button>
                     &nbsp;
                     <button onClick={this.resetForm} className="btn btn-danger">

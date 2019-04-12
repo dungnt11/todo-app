@@ -7,7 +7,8 @@ export class DataContext extends Component {
     super(props);
     this.state = {
       tasks: [],
-      statusAdd: false
+      statusAdd: false,
+      dataEdit: ""
     };
   }
 
@@ -34,6 +35,13 @@ export class DataContext extends Component {
     );
   };
 
+  editTask = el => {
+    this.setState({
+      statusAdd: true,
+      dataEdit: el
+    });
+  };
+
   componentDidMount() {
     this.setState({
       tasks: JSON.parse(localStorage.getItem("tasks"))
@@ -46,7 +54,9 @@ export class DataContext extends Component {
           status: this.state.statusAdd,
           setTask: this.changeStatus,
           addWork: this.addWork,
-          data: this.state.tasks
+          data: this.state.tasks,
+          editTask: this.editTask,
+          dataEdit: this.state.dataEdit
         }}
       >
         {this.props.children}
